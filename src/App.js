@@ -11,7 +11,12 @@ function App() {
       return;
     }
 
-    setToDos((prev) => [...prev, toDo]);
+    const newToDo = {
+      date: Date.now(),
+      text: toDo,
+    };
+
+    setToDos((prev) => [...prev, newToDo]);
 
     setToDo("");
   };
@@ -20,9 +25,8 @@ function App() {
     setToDo(e.target.value);
   };
 
-  const onDeleteBtn = (index) => {
-    console.log(toDos);
-    setToDos((prev) => prev.filter((_, i) => i !== index));
+  const onDeleteBtn = (date) => {
+    setToDos((prev) => prev.filter((todo) => todo.date !== date));
   };
 
   return (
@@ -38,11 +42,12 @@ function App() {
         <button onClick={onAddBtn}>Add To Do</button>
       </form>
       <ul>
-        {toDos.map((toDo, index, toDos) => {
+        {toDos.map((toDo) => {
           return (
-            <li key={index}>
-              {toDo},{index}
-              <button onClick={() => onDeleteBtn(index)}>❌</button>
+            <li key={toDo.date}>
+              <h2>{toDo.text}</h2>
+              <h4>{new Date(toDo.date).toLocaleTimeString()}</h4>
+              <button onClick={() => onDeleteBtn(toDo.date)}>❌</button>
             </li>
           );
         })}
