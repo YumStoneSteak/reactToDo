@@ -11,7 +11,7 @@ function App() {
       return;
     }
 
-    setToDos((prev) => [toDo, ...prev]);
+    setToDos((prev) => [...prev, toDo]);
 
     setToDo("");
   };
@@ -22,7 +22,7 @@ function App() {
 
   const onDeleteBtn = (index) => {
     console.log(toDos);
-    setToDos((prev) => prev.splice(index - 1, 1));
+    setToDos((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -41,7 +41,7 @@ function App() {
         {toDos.map((toDo, index, toDos) => {
           return (
             <li key={index}>
-              {toDo}
+              {toDo},{index}
               <button onClick={() => onDeleteBtn(index)}>❌</button>
             </li>
           );
